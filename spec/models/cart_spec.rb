@@ -21,10 +21,16 @@ RSpec.describe Cart, type: :model do
       expect(cart.items.third.quantity).to be 7
     end
 
-    it "the product can be added in and deleted from the cart" do      
-    end
+    it "the product can be added in and deleted from the cart" do    
+      cart = Cart.new  
+      p1 = Product.create(title: "清心綠茶")
+      p2 =Product.create(title: "黑糖鮮奶")
+      3.times{ cart.add_item(p1.id) }
+      4.times{ cart.add_item(p2.id) }
 
-    it "able to count the price for each cartitem" do      
+      expect(cart.items.first.product_id).to be p1.id
+      expect(cart.items.second.product_id).to be p2.id
+      expect(cart.items.first.product).to be_a Product
     end
 
     it "able to count the total price for the whole cart" do      
