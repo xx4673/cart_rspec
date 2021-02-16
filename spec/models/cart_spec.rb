@@ -33,7 +33,16 @@ RSpec.describe Cart, type: :model do
       expect(cart.items.first.product).to be_a Product
     end
 
-    it "able to count the total price for the whole cart" do      
+    it "able to count the total price for the whole cart" do
+      cart = Cart.new
+      p1 = Product.create(title: "BlackBeanOlette", price: 230)      
+      p2 = Product.create(title: "GreenBeanOlette", price: 330)
+      5.times{ 
+        cart.add_item(p1.id) 
+        cart.add_item(p2.id)
+      }
+
+      expect(cart.total_price).to be 2800 
     end
 
     it "discount for different festivals(ex. 10% off on christmas or $100 off for every $1000 purchase)" do      
