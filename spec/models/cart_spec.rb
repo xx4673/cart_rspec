@@ -52,14 +52,33 @@ RSpec.describe Cart, type: :model do
 
   describe "two advance cart features" do
     it "to convert cart info into Hash and store in the Session" do
-      
+      cart = Cart.new
+      5.times{ cart.add_item(3) }
+      7.times{ cart.add_item(9) }
+
+      expect(cart.serialize).to eq session_hash
     end
 
     it "return the Session(format: Hash) to cart info " do
-      
+      cart = Cart.from_hash(session_hash)
+
+      expect(cart.items.first.product_id).to be 3
+      expect(cart.items.first.quantity).to be 5
+      expect(cart.items.second.product_id).to be 9
+      expect(cart.items.second.quantity).to be 7
     end
     
   end
   
+  private
+
+  def session_hash
+    {
+      "items" => [
+        { "product_id" => 3, "quantity" => 5 },
+        { "product_id" => 9, "quantity" => 7 }
+      ]
+    }
+  end
   
 end
